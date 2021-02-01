@@ -24,6 +24,7 @@ return [
     'taglib_end'    => '}',
 
     'tpl_replace_string' => [
+        '{__ADMIN_API__}' => '/static/admin/api',
        '{__ADMIN_CSS__}' => '/static/admin/css',
        '{__ADMIN_JS__}' => '/static/admin/js',
        '{__ADMIN_IMAGE__}' => '/static/admin/images',

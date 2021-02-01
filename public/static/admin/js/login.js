@@ -24,17 +24,19 @@ layui.use(['form'], function () {
             return false;
         }
         // 验证码 校验
-        var val = $(".input-val").val().toLowerCase();
-        var num = show_num.join("");
-        if(val != num){
-            layer.msg('验证码错误！请重新输入！');
-            draw(show_num);
-            return false;
-        }
+        // var val = $(".input-val").val().toLowerCase();
+        // var num = show_num.join("");
+        // if(val != num){
+        //     layer.msg('验证码错误！请重新输入！');
+        //     draw(show_num);
+        //     return false;
+        // }
 
-        window.location = '../index.html';
-        return false;
+        // window.location = '../index.html';
+        // return false;
+
         $(".input-val").val('');
+        var url = "/admin/login/check";
         $.ajax({
             url,
             data,
@@ -42,8 +44,11 @@ layui.use(['form'], function () {
             success(res){
                 if(res.status == 200){
                     layer.msg('登录成功', function () {
-                        window.location = '/xiaozhu/index.html';
+
                     });
+                }else{
+                    layer.msg(res.message);
+                    return false;
                 }
             }
         })
@@ -52,8 +57,8 @@ layui.use(['form'], function () {
 });
 $(function(){
     // location.href  =  "http://www.baidu.com";
-    draw(show_num);
-    $("#canvas").on('click',function(){
-        draw(show_num);
-    })
+    // draw(show_num);
+    // $("#canvas").on('click',function(){
+    //     draw(show_num);
+    // })
 })

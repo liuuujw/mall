@@ -12,7 +12,7 @@ class Check
 {
     public function handle($request, \Closure $next){
 
-        $request->type = "kamon-type";
+//        $request->type = "kamon-type";
         return $next($request);
     }
 
