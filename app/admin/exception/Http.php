@@ -26,6 +26,7 @@ class Http extends Handle
      */
     public function render($request, Throwable $e): Response
     {
+        return parent::render($request, $e);
         if(method_exists($e, 'getStatusCode')){
             $httpStatus = $e->getStatusCode();
         }else{
