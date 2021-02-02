@@ -40,6 +40,18 @@ class Login extends BaseController {
             $password = $this->request->param('password', '', 'trim');
             $captcha = $this->request->param('captcha', '', 'trim');
 
+            $data = [
+              'username'=>$username,
+              'password'=>$password,
+              'captcha'=>$captcha
+            ];
+
+            $validate = new \app\admin\validate\AdminUser();
+            if(!$validate->check($data)){
+                return show(config("status.error"), $validate->getError(),[]);
+            }
+
+
             if(empty($username) || empty($password) || empty($captcha)){
                 return show(config("status.error"), "参数错误", []);
             }

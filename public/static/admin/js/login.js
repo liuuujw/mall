@@ -9,7 +9,7 @@ layui.use(['form'], function () {
     // 进行登录操作
     form.on('submit(login)', function (data) {
         data = data.field;
-        if (data.username == '') {
+        /*if (data.username == '') {
             layer.msg('用户名不能为空');
             return false;
         }
@@ -22,7 +22,7 @@ layui.use(['form'], function () {
         if (data.captcha == '') {
             layer.msg('验证码不能为空');
             return false;
-        }
+        }*/
         // 验证码 校验
         // var val = $(".input-val").val().toLowerCase();
         // var num = show_num.join("");
