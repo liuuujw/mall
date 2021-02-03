@@ -9,7 +9,7 @@ namespace app\admin\controller;
 
 use app\BaseController;
 use think\facade\View;
-use app\admin\model\AdminUser;
+use app\common\model\mysql\AdminUser;
 use think\facade\Session;
 
 class Login extends BaseController {
@@ -46,55 +46,34 @@ class Login extends BaseController {
               'captcha'=>$captcha
             ];
 
+            /**
+             * 参数验证放在validate中
+             */
             $validate = new \app\admin\validate\AdminUser();
             if(!$validate->check($data)){
                 return show(config("status.error"), $validate->getError(),[]);
             }
 
 
-            if(empty($username) || empty($password) || empty($captcha)){
-                return show(config("status.error"), "参数错误", []);
+//            if(empty($username) || empty($password) || empty($captcha)){
+//                return show(config("status.error"), "参数错误", []);
+//            }
+//
+//            if(!captcha_check($captcha)){
+//                return show(config("status.error"), "验证码错误", []);
+//            }
+
+
+            $adminUserObj = new \app\admin\business\AdminUser();
+            $result = $adminUserObj->login($data);
+            if($result){
+                return show(config("status.success"), '登录成功', []);
             }
-
-            if(!captcha_check($captcha)){
-                return show(config("status.error"), "验证码错误", []);
-            }
-
-            //获取用户信息
-            $adminUserModel = new AdminUser();
-            $userInfo = $adminUserModel->getUserInfoByUsername($username);
-            if(empty($userInfo) || $userInfo->status == 0){
-                return show(config("status.error"), "用户不存在", []);
-            }
-            $userInfo = $userInfo->toArray();
-
-            //校验密码是否正确
-            if(md5($password . '_' . $userInfo['salt']) != $userInfo['password']){
-                return show(config("status.error"), "密码不正确", []);
-            }
-
-            unset($userInfo['password']);
-
-            $updateDate = [
-                'last_login_time' => time(),
-                'last_login_ip' => request()->ip(),
-            ];
-
-            $res = $adminUserModel->updateById($userInfo['id'], $updateDate);
-
-            if(empty($res)){
-                return show(config("status.error"), '登录失败' );
-            }
-
+            return $result;
         }catch (\Exception $e){
-            print_r($e->getMessage());die;
             // todo 记录日志
-            return show(config("status.error"), '登录失败', []);
-
+            return show(config("status.error"), $e->getMessage(), []);
         }
-
-        session(config("admin.session_admin"), $userInfo);
-        return show(config("status.success"), '登录成功', $userInfo);
 
     }
 

@@ -16,7 +16,7 @@ class AdminUser extends Validate
     protected $rule = [
         'username' => 'require',
         'password' => 'require',
-        'captcha' => 'require:checkCaptcha',
+        'captcha' => 'require|checkCaptcha',
     ];
 
     protected $message = [

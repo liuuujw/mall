@@ -2,17 +2,16 @@
 /**
  * Create By Kamon
  * User: Kamon
- * Date: {2021-02-01}
- * Time: {15:07}
+ * Date: {2021-02-03}
+ * Time: {13:46}
  */
 
-namespace app\admin\model;
+namespace app\common\model\mysql;
 
 use think\Model;
 
 class AdminUser extends Model
 {
-
 
     /**
      * 通过用户名获取用户信息
@@ -33,7 +32,7 @@ class AdminUser extends Model
      * 通过主键id更改用户信息
      * @param $id
      * @param $data
-     * @return AdminUser|false
+     * @return \app\admin\model\AdminUser|false
      */
     public function updateById($id, $data)
     {
@@ -46,5 +45,4 @@ class AdminUser extends Model
         return $this->where($where)->update($data);
 
     }
-
 }

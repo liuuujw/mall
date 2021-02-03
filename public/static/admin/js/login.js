@@ -48,6 +48,7 @@ layui.use(['form'], function () {
                     });
                 }else{
                     layer.msg(res.message);
+                    $(".admin-captcha img").attr("src", "/captcha.html?"+Math.random());
                     return false;
                 }
             }
